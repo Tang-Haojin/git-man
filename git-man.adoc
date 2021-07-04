@@ -1,7 +1,10 @@
 = Git 使用规范手册
-陈璐; 高泽宇; 唐浩晋
-:toc: right
+陈璐; 高泽宇; 唐浩晋 <tanghaojin@outlook.com>
+1, {docdate}
+:toc: left
 :toc-title: 目录
+:toclevels: 4
+:stylesheet: css/clean.css
 
 == 基本操作
 
@@ -14,15 +17,15 @@
 git init
 ----
 
-在指定⽬录下执⾏ `git init`, 就可以创建⼀个 git 版本库. 
-此时 git 相关信息存储在 `.git` ⽬录中. 
+在指定目录下执行 `git init`, 就可以创建一个 git 版本库. 
+此时 git 相关信息存储在 `.git` 目录中. 
 
 === 记录更新到仓库
 
 * `git add <pathspec>`: 跟踪新文件, 暂存已修改的文件. 
-该命令会将⽂件或者⽬录 (以及其下的所有⽂件) 添加到暂存区 (stage) 中. 
+该命令会将文件或者目录 (以及其下的所有文件) 添加到暂存区 (stage) 中. 
 
-* `git commit [-m <message>]`: 将当前暂存区的修改提交⾄版本库. 
+* `git commit [-m <message>]`: 将当前暂存区的修改提交至版本库. 
 该命令会打开一个文本编辑器来输入提交说明. 
 ** `-m <message>`: 将 `message` 作为提交说明, 而不再打开文本编辑器. 
 
@@ -54,15 +57,219 @@ git add <target>
 ** 从暂存区删除的文件
 ** 暂存区中移动/重命名的文件
 
-* `git diff [args]`: ⽐较代码的差异. 
-默认⽐较暂存区和⼯作区的差异.
-** `git diff <commit ID> [commit ID 2]`: ⽐较指定提交之间的差异. 
-如果没有指定 `commit ID 2`, 则⽐较指定提交与⼯作区的差异. 
-** `git diff --cached [commit ID]`: ⽐较暂存区和⽬标提交的差异. 
-如果没有指定 `commit ID`, 则默认和最近⼀次提交⽐较. 
+* `git diff [args]`: 比较代码的差异. 
+默认比较暂存区和工作区的差异.
+** `git diff <commit ID> [commit ID 2]`: 比较指定提交之间的差异. 
+如果没有指定 `commit ID 2`, 则比较指定提交与工作区的差异. 
+** `git diff --cached [commit ID]`: 比较暂存区和目标提交的差异. 
+如果没有指定 `commit ID`, 则默认和最近一次提交比较. 
 
 * `git log`: 查看历史提交记录
 
-* `ls-files`: 查看暂存区追踪的⽂件
+* `ls-files`: 查看暂存区追踪的文件
 
 === 分支管理
+
+* `git branch [branch name]`: 列出所有本地分支. 
+** `branch name`: 创建名为 `branch name` 的新分支, 停留在当前分支. 
+
+* `git checkout [-b] <branch>`: 切换到 `branch` 分支. 
+** `-b`: 创建新分支，并切换到该分支中. 
+
+* `git merge [branch]`: 将远程分支合并到当前分支. 
+** `branch`: 将 `branch` 分支合并到当前分支. 
+
+== 推荐的开发流程和规范
+
+在创建一个git项目时, 默认会得到一个 master 分支. 如果 master 分支已经被发布, 但我们又需
+要开发新的功能, 那么此时并不方便在 master 分支上直接进行修改. 
+
+一个比较好的策略是新建一个 develop 分支, 在该分支上开发完毕之后再合并分支到 master 分支. 
+在 develop 分支上开发时, 再根据不同的需求, 新建相应的分支, 开发完毕后再合并到 develop 分支. 
+当 develop 分支完成开发后, 再将 develop 分支合并到 master 分支上线. 
+
+为了更好地说明开发流程, 我们来看一个简单的例子. 
+
+=== 一个例子
+
+假设此时你正在写一个 CPU, 现在你的仓库如<<初始状态>>所示, 已经有了三个提交, 并且目前
+`master` 分支和 `develop` 分支均位于 Commit 2 提交上. 你现在位于 `develop` 分支上. 
+
+[#初始状态]
+.初始状态
+image::image/img1.svg[初始状态, 50%, align="center"]
+
+==== 新增功能
+
+现在, 你需要为你的 CPU 添加 cache. 为了开发这一新**功能**, 你选择新建并切换到一个名为
+`feat-cache` 的分支:
+
+[source, git]
+----
+$ git checkout -b feat-cache
+Switched to a new branch "feat-cache"
+----
+
+在经历了一段时间的开发后, 你在 `feat-cache` 分支上已经有了一些提交, 并且有一些未提交的
+更改. 此时仓库如<<在feat-cache上有一些提交的仓库, 下图>>所示. 
+
+[#在feat-cache上有一些提交的仓库]
+.在 `feat-cache` 上有一些提交的仓库
+image::image/img2.svg[在 `feat-cache` 上有一些提交的仓库, 75%, align="center"]
+
+==== 突发需求
+
+就在这时, 不幸的事情发生了: X老师微信私戳你说 `master` 上有一个 bug, 这个 bug
+会让你的 CPU 在执行 `fence` 指令的时候出现错误. 这个 bug 十分严重, 需要你立刻修复!
+
+你一拍脑袋, 啊, 原来你当初忘记实现这个指令了! 为了修复这个 bug, 你在将当前手头的工作放下,
+将工作区压入栈中:
+
+[source, git]
+----
+$ git stash
+Saved working directory and index state WIP on feat-cache: af95720 <your message>
+----
+
+然后, 你在 `develop` 分支上 checkout 了一个名为 `hot-fix` 的本地分支来修复这个 bug:
+
+[source, git]
+----
+$ git checkout develop
+Switched to branch 'develop'
+Your branch is up to date with 'origin/develop'.
+$ git checkout -b hot-fix
+Switched to a new branch 'hot-fix'
+----
+
+并在这个分支上进行紧急修复. 由于目前你的 CPU 还只是一个顺序 CPU, 因此只需要将 `fence`
+指令解析为 `nop` 即可. 确定了修复的方案, 你于是三下五除二地修好了这个 bug.
+
+测试无误后, 你暂存并提交了你的修改:
+
+[source, git]
+----
+$ git add .
+$ git commit -m "fix: `fence` not implemented"
+[hotfix 1a80fb7] fix: `fence` not implemented
+ 2 file changed, 7 insertions(+)
+----
+
+这时, 你的仓库如<<hot-fix分支, 下图>>所示. 
+
+[#hot-fix分支]
+.在 `hot-fix` 分支上修好了 bug 的仓库
+image::image/img3.svg[在 `hot-fix` 分支上修好了 bug 的仓库, 75%, align="center"]
+
+时间就是金钱. 你将 `hot-fix` 分支合并进 `develop` 分支, 并将本地分支提交到远程仓库:
+
+[source, git]
+----
+$ git checkout develop
+Switched to branch 'develop'
+Your branch is up to date with 'origin/develop'.
+$ git merge hot-fix
+Updating 7ae3f90..1a80fb7
+Fast-forward
+ decode.scala | 4 ++++
+ RVI.scala    | 3 +++
+ 2 file changed, 7 insertions(+)
+$ git push
+Counting objects: 7, done.
+Delta compression using up to 12 threads.
+Compressing objects: 100% (3/3), done.
+Writing objects: 100% (3/3), 2.33 KiB | 0 bytes/s, done.
+Total 3 (delta 2), reused 0 (delta 0)
+To https://github.com/yourname/yourcpu
+   7ae3f90..1a80fb7  develop -> develop
+updating local tracking ref 'refs/remotes/origin/develop'
+----
+
+为了让用户获得这个修复, 你将 `develop` 分支合并到 `master` 分支, 并将其推送到远程仓库:
+
+[source, git]
+----
+$ git checkout master
+Switched to branch 'master'
+Your branch is up to date with 'origin/master'.
+$ git merge develop
+Updating 7ae3f90..1a80fb7
+Fast-forward
+ decode.scala | 4 ++++
+ RVI.scala    | 3 +++
+ 2 file changed, 7 insertions(+)
+$ git push
+Total 0 (delta 0), reused 0 (delta 0)
+To https://github.com/yourname/yourcpu
+   7ae3f90..1a80fb7  master -> master
+updating local tracking ref 'refs/remotes/origin/master'
+----
+
+呼! 你长舒一口气, 这个 bug 修好了, 你可以继续回到你的 `feat-cache` 分支上工作了. 
+哦对了, 既然 bug 修复好了, 那么 `hot-fix` 分支也完成了它的使命, 是时候删除它了:
+
+[source, git]
+----
+$ git branch -d hot-fix
+Deleted branch hot-fix (was 1a80fb7).
+----
+
+这时候, 你的仓库如<<bug修复完成后的仓库, 下图>>所示.
+
+[#bug修复完成后的仓库]
+.bug 修复完成后的仓库
+image::image/img4.svg[bug 修复完成后的仓库, 75%, align="center"]
+
+==== 合并修补
+
+你发现, 这个 bug 虽然在 `master` 和 `develop` 分支中被修复了, 但 `feat-cache`
+分支却仍然是有 bug 的版本! 因此, 你需要先将 `develop` 分支并入 `feat-cache` 分支,
+然后再进行下一步工作:
+
+[source, git]
+----
+$ git checkout feat-cache
+Switched to branch 'feat-cache'
+$ git merge develop
+Merge made by the 'recursive' strategy.
+decode.scala | 4 ++++
+RVI.scala    | 3 +++
+2 file changed, 7 insertions(+)
+----
+
+等等, 这和之前的合并好像有些不太一样? 原来, 此时要合并的两个分支 `develop` 和 `feat-cache`
+在 `Commit 2` 处发生了分岔, `develop` 不再是 `feat-cache` 的直接历史了. 在这种情况下, git
+会做一些额外的工作: 根据 `develop` 指向的提交 `Commit 5`, `feat-cache` 指向的提交
+`Commit 4` 和产生分岔的提交 `Commit 2` 这三个提交生成一个新的**合并提交**
+`Commit 6`, 如<<合并提交后的仓库, 下图>>所示. 
+
+[#合并提交后的仓库]
+.合并提交后的仓库
+image::image/img5.svg[合并提交后的仓库, 90%, align="center"]
+
+你嘬了一口咖啡, 心想: 终于可以继续写 cache 了. 
+
+==== 完成开发
+
+在经历了一段时间的敏捷开发后, 你成功地完成了 cache 的开发, 于是你心怀激动地输入:
+
+[source, git]
+----
+$ git commit -m "feat: cache implemented and involved by default"
+----
+
+在经过仔细验证后, 你觉得应该没有什么 bug 了, 于是你决定将其并入 `develop` 分支:
+
+[source, git]
+----
+$ git checkout develop
+$ git merge feat-cache
+----
+
+经历了上一次紧急修补 bug 的教训, 你想了想, 稳妥起见, 还是先不把 `develop`
+分支并入 `master` 分支, 等经过更多人和更充分的测试后再说吧. 这时,
+你的仓库应当如<<实现cache后的仓库, 下图>>所示. 
+
+[#实现cache后的仓库]
+.实现 cache 后的仓库
+image::image/img6.svg[实现cache后的仓库, 80%, align="center"]
