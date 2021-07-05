@@ -5,7 +5,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta name="generator" content="Asciidoctor 2.0.10">
-<meta name="author" content="陈璐, 高泽宇, 唐浩晋">
+<meta name="author" content="唐浩晋, 陈璐, 高泽宇">
 <title>Git 使用规范手册</title>
 <style>
 /* Asciidoctor default stylesheet | MIT License | https://asciidoctor.org */
@@ -51,15 +51,16 @@ table {
   font-size: 3vw;
 }
 </style>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 </head>
 <body class="article toc2 toc-left data-line-1">
 <div id="header">
 <h1>Git 使用规范手册</h1>
 <div class="details">
-<span id="author" class="author">陈璐</span><br>
-<span id="author2" class="author">高泽宇</span><br>
-<span id="author3" class="author">唐浩晋</span><br>
-<span id="email3" class="email"><a href="mailto:tanghaojin@outlook.com">tanghaojin@outlook.com</a></span><br>
+<span id="author" class="author">唐浩晋</span><br>
+<span id="email" class="email"><a href="mailto:tanghaojin@outlook.com">tanghaojin@outlook.com</a></span><br>
+<span id="author2" class="author">陈璐</span><br>
+<span id="author3" class="author">高泽宇</span><br>
 <span id="revnumber">version 1,</span>
 <span id="revdate">2021-07-05</span>
 </div>
@@ -100,42 +101,43 @@ table {
 </li>
 </ul>
 </li>
+<li><a href="#_进阶操作">进阶操作</a></li>
 </ul>
 </div>
 </div>
 <div id="content">
-<div class="sect1 data-line-9">
+<div class="sect1 data-line-10">
 <h2 id="_基本操作">基本操作</h2>
 <div class="sectionbody">
-<div class="paragraph data-line-11">
+<div class="paragraph data-line-12">
 <p>本节将会介绍使用 git 的基本操作.</p>
 </div>
-<div class="sect2 data-line-13">
+<div class="sect2 data-line-14">
 <h3 id="_初始化">初始化</h3>
-<div class="listingblock data-line-16">
+<div class="listingblock data-line-17">
 <div class="content">
 <pre class="highlight"><code class="language-git" data-lang="git">git init</code></pre>
 </div>
 </div>
-<div class="paragraph data-line-20">
+<div class="paragraph data-line-21">
 <p>在指定目录下执行 <code>git init</code>, 就可以创建一个 git 版本库.
 此时 git 相关信息存储在 <code>.git</code> 目录中.</p>
 </div>
 </div>
-<div class="sect2 data-line-23">
+<div class="sect2 data-line-24">
 <h3 id="_记录更新到仓库">记录更新到仓库</h3>
-<div class="ulist data-line-25">
+<div class="ulist data-line-26">
 <ul>
-<li class="data-line-25">
+<li class="data-line-26">
 <p><code>git add &lt;pathspec&gt;</code>: 跟踪新文件, 暂存已修改的文件.
 该命令会将文件或者目录 (以及其下的所有文件) 添加到暂存区 (stage) 中.</p>
 </li>
-<li class="data-line-28">
+<li class="data-line-29">
 <p><code>git commit [-m &lt;message&gt;]</code>: 将当前暂存区的修改提交至版本库.
 该命令会打开一个文本编辑器来输入提交说明.</p>
-<div class="ulist data-line-30">
+<div class="ulist data-line-31">
 <ul>
-<li class="data-line-30">
+<li class="data-line-31">
 <p><code>-m &lt;message&gt;</code>: 将 <code>message</code> 作为提交说明, 而不再打开文本编辑器.</p>
 </li>
 </ul>
@@ -143,11 +145,11 @@ table {
 </li>
 </ul>
 </div>
-<div class="admonitionblock tip data-line-32">
+<div class="admonitionblock tip data-line-33">
 <table>
 <tr>
 <td class="icon">
-<div class="title">Tip</div>
+<i class="fa icon-tip" title="Tip"></i>
 </td>
 <td class="content">
 启动的编辑器是通过 Shell 的环境变量 <code>EDITOR</code> 指定的，一般默认为 vim.
@@ -157,28 +159,28 @@ table {
 </tr>
 </table>
 </div>
-<div class="ulist data-line-36">
-<ul>
-<li class="data-line-36">
-<p><code>git rm [--cached|-f] &lt;pathspec&gt;</code>: 将文件或路径从 git 和工作区移除.</p>
 <div class="ulist data-line-37">
 <ul>
 <li class="data-line-37">
+<p><code>git rm [--cached|-f] &lt;pathspec&gt;</code>: 将文件或路径从 git 和工作区移除.</p>
+<div class="ulist data-line-38">
+<ul>
+<li class="data-line-38">
 <p><code>--cached</code>: 不要将文件从工作区移除.</p>
 </li>
-<li class="data-line-38">
+<li class="data-line-39">
 <p><code>-f</code>: 即使指定的路径存在暂存或未暂存的更改, 仍然执行.</p>
 </li>
 </ul>
 </div>
 </li>
-<li class="data-line-40">
+<li class="data-line-41">
 <p><code>git mv &lt;source&gt; &lt;target&gt;</code>: 将文件在 git 中移动/重命名.
 该操作完全等价于:</p>
 </li>
 </ul>
 </div>
-<div class="listingblock data-line-44">
+<div class="listingblock data-line-45">
 <div class="content">
 <pre class="highlight"><code class="language-git" data-lang="git">mv &lt;source&gt; &lt;target&gt;
 git rm &lt;source&gt;
@@ -186,89 +188,89 @@ git add &lt;target&gt;</code></pre>
 </div>
 </div>
 </div>
-<div class="sect2 data-line-50">
+<div class="sect2 data-line-51">
 <h3 id="_查看信息">查看信息</h3>
-<div class="ulist data-line-52">
-<ul>
-<li class="data-line-52">
-<p><code>git status</code>: 检查当前文件状态. 这些状态包括但不限于:</p>
 <div class="ulist data-line-53">
 <ul>
 <li class="data-line-53">
+<p><code>git status</code>: 检查当前文件状态. 这些状态包括但不限于:</p>
+<div class="ulist data-line-54">
+<ul>
+<li class="data-line-54">
 <p>修改过但尚未暂存的文件</p>
 </li>
-<li class="data-line-54">
+<li class="data-line-55">
 <p>暂存过但尚未提交的文件</p>
 </li>
-<li class="data-line-55">
+<li class="data-line-56">
 <p>尚未跟踪的文件</p>
 </li>
-<li class="data-line-56">
+<li class="data-line-57">
 <p>新加入暂存区的文件</p>
 </li>
-<li class="data-line-57">
+<li class="data-line-58">
 <p>从暂存区删除的文件</p>
 </li>
-<li class="data-line-58">
+<li class="data-line-59">
 <p>暂存区中移动/重命名的文件</p>
 </li>
 </ul>
 </div>
 </li>
-<li class="data-line-60">
+<li class="data-line-61">
 <p><code>git diff [args]</code>: 比较代码的差异.
 默认比较暂存区和工作区的差异.</p>
-<div class="ulist data-line-62">
+<div class="ulist data-line-63">
 <ul>
-<li class="data-line-62">
+<li class="data-line-63">
 <p><code>git diff &lt;commit ID&gt; [commit ID 2]</code>: 比较指定提交之间的差异.
 如果没有指定 <code>commit ID 2</code>, 则比较指定提交与工作区的差异.</p>
 </li>
-<li class="data-line-64">
+<li class="data-line-65">
 <p><code>git diff --cached [commit ID]</code>: 比较暂存区和目标提交的差异.
 如果没有指定 <code>commit ID</code>, 则默认和最近一次提交比较.</p>
 </li>
 </ul>
 </div>
 </li>
-<li class="data-line-67">
+<li class="data-line-68">
 <p><code>git log</code>: 查看历史提交记录</p>
 </li>
-<li class="data-line-69">
+<li class="data-line-70">
 <p><code>ls-files</code>: 查看暂存区追踪的文件</p>
 </li>
 </ul>
 </div>
 </div>
-<div class="sect2 data-line-71">
+<div class="sect2 data-line-72">
 <h3 id="_分支管理">分支管理</h3>
-<div class="ulist data-line-73">
-<ul>
-<li class="data-line-73">
-<p><code>git branch [branch name]</code>: 列出所有本地分支.</p>
 <div class="ulist data-line-74">
 <ul>
 <li class="data-line-74">
+<p><code>git branch [branch name]</code>: 列出所有本地分支.</p>
+<div class="ulist data-line-75">
+<ul>
+<li class="data-line-75">
 <p><code>branch name</code>: 创建名为 <code>branch name</code> 的新分支, 停留在当前分支.</p>
 </li>
 </ul>
 </div>
 </li>
-<li class="data-line-76">
-<p><code>git checkout [-b] &lt;branch&gt;</code>: 切换到 <code>branch</code> 分支.</p>
-<div class="ulist data-line-77">
-<ul>
 <li class="data-line-77">
+<p><code>git checkout [-b] &lt;branch&gt;</code>: 切换到 <code>branch</code> 分支.</p>
+<div class="ulist data-line-78">
+<ul>
+<li class="data-line-78">
 <p><code>-b</code>: 创建新分支，并切换到该分支中.</p>
 </li>
 </ul>
 </div>
 </li>
-<li class="data-line-79">
-<p><code>git merge [branch]</code>: 将远程分支合并到当前分支.</p>
-<div class="ulist data-line-80">
-<ul>
 <li class="data-line-80">
+<p><code>git merge [branch]</code>: 将远程分支合并到当前分支.</p>
+<div class="ulist data-line-81">
+<ul>
+<li class="data-line-81">
 <p><code>branch</code>: 将 <code>branch</code> 分支合并到当前分支.</p>
 </li>
 </ul>
@@ -279,76 +281,76 @@ git add &lt;target&gt;</code></pre>
 </div>
 </div>
 </div>
-<div class="sect1 data-line-82">
+<div class="sect1 data-line-83">
 <h2 id="_开发流程和规范">开发流程和规范</h2>
 <div class="sectionbody">
-<div class="paragraph data-line-84">
+<div class="paragraph data-line-85">
 <p>在创建一个git项目时, 默认会得到一个 master 分支. 如果 master 分支已经被发布, 但我们又需
 要开发新的功能, 那么此时并不方便在 master 分支上直接进行修改.</p>
 </div>
-<div class="paragraph data-line-87">
+<div class="paragraph data-line-88">
 <p>一个比较好的策略是新建一个 develop 分支, 在该分支上开发完毕之后再合并分支到 master 分支.
 在 develop 分支上开发时, 再根据不同的需求, 新建相应的分支, 开发完毕后再合并到 develop 分支.
 当 develop 分支完成开发后, 再将 develop 分支合并到 master 分支上线.</p>
 </div>
-<div class="paragraph data-line-91">
+<div class="paragraph data-line-92">
 <p>为了更好地说明开发流程, 我们来看一个简单的例子.</p>
 </div>
-<div class="sect2 data-line-93">
+<div class="sect2 data-line-94">
 <h3 id="_一个例子">一个例子</h3>
-<div class="paragraph data-line-95">
+<div class="paragraph data-line-96">
 <p>假设此时你正在写一个 CPU, 现在你的仓库如<a href="#初始状态">初始状态</a>所示, 已经有了三个提交, 并且目前
 <code>master</code> 分支和 <code>develop</code> 分支均位于 Commit 2 提交上. 你现在位于 <code>develop</code> 分支上.</p>
 </div>
-<div id="初始状态" class="imageblock text-center data-line-100">
+<div id="初始状态" class="imageblock text-center data-line-101">
 <div class="content">
 <img src="image/img1.svg" alt="初始状态" width="50%">
 </div>
 <div class="title">Figure 1. 初始状态</div>
 </div>
-<div class="sect3 data-line-102">
+<div class="sect3 data-line-103">
 <h4 id="_新增功能">新增功能</h4>
-<div class="paragraph data-line-104">
+<div class="paragraph data-line-105">
 <p>现在, 你需要为你的 CPU 添加 cache. 为了开发这一新<strong>功能</strong>, 你选择新建并切换到一个名为
 <code>feat-cache</code> 的分支:</p>
 </div>
-<div class="listingblock data-line-108">
+<div class="listingblock data-line-109">
 <div class="content">
 <pre class="highlight"><code class="language-git" data-lang="git">$ git checkout -b feat-cache
 Switched to a new branch "feat-cache"</code></pre>
 </div>
 </div>
-<div class="paragraph data-line-113">
+<div class="paragraph data-line-114">
 <p>在经历了一段时间的开发后, 你在 <code>feat-cache</code> 分支上已经有了一些提交, 并且有一些未提交的
 更改. 此时仓库如<a href="#在feat-cache上有一些提交的仓库">下图</a>所示.</p>
 </div>
-<div id="在feat-cache上有一些提交的仓库" class="imageblock text-center data-line-118">
+<div id="在feat-cache上有一些提交的仓库" class="imageblock text-center data-line-119">
 <div class="content">
 <img src="image/img2.svg" alt="在 `feat-cache` 上有一些提交的仓库" width="75%">
 </div>
 <div class="title">Figure 2. 在 <code>feat-cache</code> 上有一些提交的仓库</div>
 </div>
 </div>
-<div class="sect3 data-line-120">
+<div class="sect3 data-line-121">
 <h4 id="_突发需求">突发需求</h4>
-<div class="paragraph data-line-122">
+<div class="paragraph data-line-123">
 <p>就在这时, 不幸的事情发生了: X老师微信私戳你说 <code>master</code> 上有一个 bug, 这个 bug
 会让你的 CPU 在执行 <code>fence</code> 指令的时候出现错误. 这个 bug 十分严重, 需要你立刻修复!</p>
 </div>
-<div class="paragraph data-line-125">
+<div class="paragraph data-line-126">
 <p>你一拍脑袋, 啊, 原来你当初忘记实现这个指令了! 为了修复这个 bug, 你在将当前手头的工作放下,
 将工作区压入栈中:</p>
 </div>
-<div class="listingblock data-line-129">
+<div class="listingblock data-line-130">
 <div class="content">
 <pre class="highlight"><code class="language-git" data-lang="git">$ git stash
 Saved working directory and index state WIP on feat-cache: af95720 &lt;your message&gt;</code></pre>
 </div>
 </div>
-<div class="paragraph data-line-134">
+<div class="paragraph data-line-135">
 <p>然后, 你在 <code>develop</code> 分支上 checkout 了一个名为 <code>hot-fix</code> 的本地分支来修复这个 bug:</p>
 </div>
-<div class="listingblock data-line-137">
+<div class="listingblock data-line-138">
 <div class="content">
 <pre class="highlight"><code class="language-git" data-lang="git">$ git checkout develop
 Switched to branch 'develop'
@@ -357,14 +359,14 @@ $ git checkout -b hot-fix
 Switched to a new branch 'hot-fix'</code></pre>
 </div>
 </div>
-<div class="paragraph data-line-145">
+<div class="paragraph data-line-146">
 <p>并在这个分支上进行紧急修复. 由于目前你的 CPU 还只是一个顺序 CPU, 因此只需要将 <code>fence</code>
 指令解析为 <code>nop</code> 即可. 确定了修复的方案, 你于是三下五除二地修好了这个 bug.</p>
 </div>
-<div class="paragraph data-line-148">
+<div class="paragraph data-line-149">
 <p>测试无误后, 你暂存并提交了你的修改:</p>
 </div>
-<div class="listingblock data-line-151">
+<div class="listingblock data-line-152">
 <div class="content">
 <pre class="highlight"><code class="language-git" data-lang="git">$ git add .
 $ git commit -m "fix: `fence` not implemented"
@@ -372,19 +374,19 @@ $ git commit -m "fix: `fence` not implemented"
  2 file changed, 7 insertions(+)</code></pre>
 </div>
 </div>
-<div class="paragraph data-line-158">
+<div class="paragraph data-line-159">
 <p>这时, 你的仓库如<a href="#hot-fix分支">下图</a>所示.</p>
 </div>
-<div id="hot-fix分支" class="imageblock text-center data-line-162">
+<div id="hot-fix分支" class="imageblock text-center data-line-163">
 <div class="content">
 <img src="image/img3.svg" alt="在 `hot-fix` 分支上修好了 bug 的仓库" width="75%">
 </div>
 <div class="title">Figure 3. 在 <code>hot-fix</code> 分支上修好了 bug 的仓库</div>
 </div>
-<div class="paragraph data-line-164">
+<div class="paragraph data-line-165">
 <p>时间就是金钱. 你将 <code>hot-fix</code> 分支合并进 <code>develop</code> 分支, 并将本地分支提交到远程仓库:</p>
 </div>
-<div class="listingblock data-line-167">
+<div class="listingblock data-line-168">
 <div class="content">
 <pre class="highlight"><code class="language-git" data-lang="git">$ git checkout develop
 Switched to branch 'develop'
@@ -406,10 +408,10 @@ To https://github.com/yourname/yourcpu
 updating local tracking ref 'refs/remotes/origin/develop'</code></pre>
 </div>
 </div>
-<div class="paragraph data-line-188">
+<div class="paragraph data-line-189">
 <p>为了让用户获得这个修复, 你将 <code>develop</code> 分支合并到 <code>master</code> 分支, 并将其推送到远程仓库:</p>
 </div>
-<div class="listingblock data-line-191">
+<div class="listingblock data-line-192">
 <div class="content">
 <pre class="highlight"><code class="language-git" data-lang="git">$ git checkout master
 Switched to branch 'master'
@@ -427,34 +429,34 @@ To https://github.com/yourname/yourcpu
 updating local tracking ref 'refs/remotes/origin/master'</code></pre>
 </div>
 </div>
-<div class="paragraph data-line-208">
+<div class="paragraph data-line-209">
 <p>呼! 你长舒一口气, 这个 bug 修好了, 你可以继续回到你的 <code>feat-cache</code> 分支上工作了.
 哦对了, 既然 bug 修复好了, 那么 <code>hot-fix</code> 分支也完成了它的使命, 是时候删除它了:</p>
 </div>
-<div class="listingblock data-line-212">
+<div class="listingblock data-line-213">
 <div class="content">
 <pre class="highlight"><code class="language-git" data-lang="git">$ git branch -d hot-fix
 Deleted branch hot-fix (was 1a80fb7).</code></pre>
 </div>
 </div>
-<div class="paragraph data-line-217">
+<div class="paragraph data-line-218">
 <p>这时候, 你的仓库如<a href="#bug修复完成后的仓库">下图</a>所示.</p>
 </div>
-<div id="bug修复完成后的仓库" class="imageblock text-center data-line-221">
+<div id="bug修复完成后的仓库" class="imageblock text-center data-line-222">
 <div class="content">
 <img src="image/img4.svg" alt="bug 修复完成后的仓库" width="75%">
 </div>
 <div class="title">Figure 4. bug 修复完成后的仓库</div>
 </div>
 </div>
-<div class="sect3 data-line-223">
+<div class="sect3 data-line-224">
 <h4 id="_合并修补">合并修补</h4>
-<div class="paragraph data-line-225">
+<div class="paragraph data-line-226">
 <p>你发现, 这个 bug 虽然在 <code>master</code> 和 <code>develop</code> 分支中被修复了, 但 <code>feat-cache</code>
 分支却仍然是有 bug 的版本! 因此, 你需要先将 <code>develop</code> 分支并入 <code>feat-cache</code> 分支,
 然后再进行下一步工作:</p>
 </div>
-<div class="listingblock data-line-230">
+<div class="listingblock data-line-231">
 <div class="content">
 <pre class="highlight"><code class="language-git" data-lang="git">$ git checkout feat-cache
 Switched to branch 'feat-cache'
@@ -465,48 +467,48 @@ RVI.scala    | 3 +++
 2 file changed, 7 insertions(+)</code></pre>
 </div>
 </div>
-<div class="paragraph data-line-240">
+<div class="paragraph data-line-241">
 <p>等等, 这和之前的合并好像有些不太一样? 原来, 此时要合并的两个分支 <code>develop</code> 和 <code>feat-cache</code>
 在 <code>Commit 2</code> 处发生了分岔, <code>develop</code> 不再是 <code>feat-cache</code> 的直接历史了. 在这种情况下, git
 会做一些额外的工作: 根据 <code>develop</code> 指向的提交 <code>Commit 5</code>, <code>feat-cache</code> 指向的提交
 <code>Commit 4</code> 和产生分岔的提交 <code>Commit 2</code> 这三个提交生成一个新的<strong>合并提交</strong>
 <code>Commit 6</code>, 如<a href="#合并提交后的仓库">下图</a>所示.</p>
 </div>
-<div id="合并提交后的仓库" class="imageblock text-center data-line-248">
+<div id="合并提交后的仓库" class="imageblock text-center data-line-249">
 <div class="content">
 <img src="image/img5.svg" alt="合并提交后的仓库" width="90%">
 </div>
 <div class="title">Figure 5. 合并提交后的仓库</div>
 </div>
-<div class="paragraph data-line-250">
+<div class="paragraph data-line-251">
 <p>你嘬了一口咖啡, 心想: 终于可以继续写 cache 了.</p>
 </div>
 </div>
-<div class="sect3 data-line-252">
+<div class="sect3 data-line-253">
 <h4 id="_完成开发">完成开发</h4>
-<div class="paragraph data-line-254">
+<div class="paragraph data-line-255">
 <p>在经历了一段时间的敏捷开发后, 你成功地完成了 cache 的开发, 于是你心怀激动地输入:</p>
 </div>
-<div class="listingblock data-line-257">
+<div class="listingblock data-line-258">
 <div class="content">
 <pre class="highlight"><code class="language-git" data-lang="git">$ git commit -m "feat: cache implemented and involved by default"</code></pre>
 </div>
 </div>
-<div class="paragraph data-line-261">
+<div class="paragraph data-line-262">
 <p>在经过仔细验证后, 你觉得应该没有什么 bug 了, 于是你决定将其并入 <code>develop</code> 分支:</p>
 </div>
-<div class="listingblock data-line-264">
+<div class="listingblock data-line-265">
 <div class="content">
 <pre class="highlight"><code class="language-git" data-lang="git">$ git checkout develop
 $ git merge feat-cache</code></pre>
 </div>
 </div>
-<div class="paragraph data-line-269">
+<div class="paragraph data-line-270">
 <p>经历了上一次紧急修补 bug 的教训, 你想了想, 稳妥起见, 还是先不把 <code>develop</code>
 分支并入 <code>master</code> 分支, 等经过更多人和更充分的测试后再说吧. 这时,
 你的仓库应当如<a href="#实现cache后的仓库">下图</a>所示.</p>
 </div>
-<div id="实现cache后的仓库" class="imageblock text-center data-line-275">
+<div id="实现cache后的仓库" class="imageblock text-center data-line-276">
 <div class="content">
 <img src="image/img6.svg" alt="实现cache后的仓库" width="80%">
 </div>
@@ -514,46 +516,46 @@ $ git merge feat-cache</code></pre>
 </div>
 </div>
 </div>
-<div class="sect2 data-line-277">
+<div class="sect2 data-line-278">
 <h3 id="_开发规范">开发规范</h3>
-<div class="paragraph data-line-279">
+<div class="paragraph data-line-280">
 <p>看完上述<a href="#_一个例子">例子</a>过后, 我们可以总结出这样的开发规范:</p>
 </div>
-<div class="sect3 data-line-281">
+<div class="sect3 data-line-282">
 <h4 id="_分支规范">分支规范</h4>
-<div class="ulist data-line-283">
+<div class="ulist data-line-284">
 <ul>
-<li class="data-line-283">
+<li class="data-line-284">
 <p>master 分支一般为发布分支, 其应当能够正常工作, 且经过充分的评估和测试.
 一般不会在该分支上开发.</p>
 </li>
-<li class="data-line-285">
+<li class="data-line-286">
 <p>develop 分支为开发分支, 其应当能够工作. 所有的开发工作都应该基于它,
 但一般不会直接在该分支上开发.</p>
 </li>
-<li class="data-line-287">
+<li class="data-line-288">
 <p>开发时应该基于 develop 分支新建一个开发分支, 其命名应当遵循一定的约定且有意义,
 如 <code>fix-23</code>, <code>feat-pipeline</code> 等.</p>
 </li>
-<li class="data-line-289">
+<li class="data-line-290">
 <p>开发过程中应该经常同步本地的 develop 分支, 并将其合并入开发分支.</p>
 </li>
-<li class="data-line-290">
+<li class="data-line-291">
 <p>开发结束后, 将开发分支并入 develop 分支, 并将开发分支删除.</p>
 </li>
-<li class="data-line-291">
+<li class="data-line-292">
 <p>在经过充分评估和测试后, 才可以将 develop 分支并入 master 分支.</p>
 </li>
 </ul>
 </div>
 </div>
-<div class="sect3 data-line-293">
+<div class="sect3 data-line-294">
 <h4 id="_提交信息规范">提交信息规范</h4>
-<div class="paragraph data-line-295">
+<div class="paragraph data-line-296">
 <p>提交信息只能有 <code>header</code>, <code>body</code>, <code>footer</code> 三部分组成, 每部分间用空行分隔,
 <code>body</code> 和 <code>footer</code> 是可选的:</p>
 </div>
-<div class="listingblock data-line-298">
+<div class="listingblock data-line-299">
 <div class="content">
 <pre>&lt;header&gt;
 
@@ -562,89 +564,89 @@ $ git merge feat-cache</code></pre>
 [footer]</pre>
 </div>
 </div>
-<div class="sect4 data-line-306">
+<div class="sect4 data-line-307">
 <h5 id="_header">header</h5>
-<div class="paragraph data-line-308">
+<div class="paragraph data-line-309">
 <p><code>header</code> 只有一行，包括 <code>type</code>, <code>scope</code> 和 <code>subject</code> 三个字段，其中 <code>scope</code> 为可选项:</p>
 </div>
-<div class="listingblock data-line-310">
+<div class="listingblock data-line-311">
 <div class="content">
 <pre>&lt;type&gt;[scope]: &lt;description&gt;</pre>
 </div>
 </div>
-<div class="ulist data-line-314">
-<ul>
-<li class="data-line-314">
-<p><code>type</code>: 用于说明 commit 类型，一般分为以下几种:</p>
 <div class="ulist data-line-315">
 <ul>
 <li class="data-line-315">
+<p><code>type</code>: 用于说明 commit 类型，一般分为以下几种:</p>
+<div class="ulist data-line-316">
+<ul>
+<li class="data-line-316">
 <p>build: 与构建流程等有关的改动</p>
 </li>
-<li class="data-line-316">
+<li class="data-line-317">
 <p>feat: 新增 feature</p>
 </li>
-<li class="data-line-317">
+<li class="data-line-318">
 <p>fix: 修复 bug</p>
 </li>
-<li class="data-line-318">
+<li class="data-line-319">
 <p>chore: 日常维护</p>
 </li>
-<li class="data-line-319">
+<li class="data-line-320">
 <p>test: 增加测试或修改已有测试</p>
 </li>
-<li class="data-line-320">
+<li class="data-line-321">
 <p>refactor: 不改变行为的, 对代码结构的改动</p>
 </li>
-<li class="data-line-321">
+<li class="data-line-322">
 <p>style: 对代码风格的改动 (仅限缩进, 空行一类的简单改动)</p>
 </li>
-<li class="data-line-322">
+<li class="data-line-323">
 <p>cosm: 对界面的纯视觉上的改动</p>
 </li>
-<li class="data-line-323">
+<li class="data-line-324">
 <p>docs: 对文档和注释的改动</p>
 </li>
-<li class="data-line-324">
+<li class="data-line-325">
 <p>perf: 与性能相关的改动</p>
 </li>
-<li class="data-line-325">
+<li class="data-line-326">
 <p>ci: 与 CI 配置文件或脚本有关的改动</p>
 </li>
 </ul>
 </div>
 </li>
-<li class="data-line-326">
+<li class="data-line-327">
 <p><code>scope</code>: 用于说明此次commit影响的范围</p>
 </li>
-<li class="data-line-327">
+<li class="data-line-328">
 <p><code>description</code>: 对代码变更的简短总结</p>
 </li>
 </ul>
 </div>
 </div>
-<div class="sect4 data-line-329">
+<div class="sect4 data-line-330">
 <h5 id="_body">body</h5>
-<div class="paragraph data-line-331">
+<div class="paragraph data-line-332">
 <p>可以使用 <code>body</code> 来说明此次修改的动机和修改前后程序的行为差异</p>
 </div>
 </div>
-<div class="sect4 data-line-333">
+<div class="sect4 data-line-334">
 <h5 id="_footer">footer</h5>
-<div class="paragraph data-line-335">
+<div class="paragraph data-line-336">
 <p>如果包含不兼容的修改, 则需要在 <code>footer</code> 部分提及, 以 <code>BREAKING CHANGE</code> 开头,
 并写入对修改的描述和迁移方法:</p>
 </div>
-<div class="listingblock data-line-338">
+<div class="listingblock data-line-339">
 <div class="content">
 <pre>&lt;blank line&gt;
 BREAKING CHANGE: &lt;description and migration instructions&gt;</pre>
 </div>
 </div>
-<div class="paragraph data-line-343">
+<div class="paragraph data-line-344">
 <p>同时, 如果更改涉及类似 GitHub 中的 issues 时, 也可以在 <code>footer</code> 部分提及:</p>
 </div>
-<div class="listingblock data-line-345">
+<div class="listingblock data-line-346">
 <div class="content">
 <pre>&lt;blank line&gt;
 Fixes #&lt;issue number&gt;</pre>
@@ -652,29 +654,29 @@ Fixes #&lt;issue number&gt;</pre>
 </div>
 </div>
 </div>
-<div class="sect3 data-line-350">
+<div class="sect3 data-line-351">
 <h4 id="_提交粒度规范">提交粒度规范</h4>
-<div class="paragraph data-line-352">
+<div class="paragraph data-line-353">
 <p>提交的粒度需要以功能点为单位, 每次实现新功能后进行提交, 并遵循以下原则:</p>
 </div>
-<div class="ulist data-line-354">
+<div class="ulist data-line-355">
 <ul>
-<li class="data-line-354">
+<li class="data-line-355">
 <p>将离散的任务划分到多次 commit 操作中, 比如修复了两个不同的 bug 需要进行两次提交</p>
 </li>
-<li class="data-line-355">
+<li class="data-line-356">
 <p>在提交之前对提交结果进行充分测试，不要提交未完成的工作</p>
 </li>
 </ul>
 </div>
-<div class="paragraph data-line-357">
+<div class="paragraph data-line-358">
 <p>上面两点对提交粒度进行了约束, 每一次提交都是一个最小的功能单元.</p>
 </div>
-<div class="admonitionblock tip data-line-359">
+<div class="admonitionblock tip data-line-360">
 <table>
 <tr>
 <td class="icon">
-<div class="title">Tip</div>
+<i class="fa icon-tip" title="Tip"></i>
 </td>
 <td class="content">
 通常可以不严谨地认为, 如果你在编写提交信息时遇到了困难, 那就说明提交的粒度太大.
@@ -682,11 +684,11 @@ Fixes #&lt;issue number&gt;</pre>
 </tr>
 </table>
 </div>
-<div class="admonitionblock note data-line-361">
+<div class="admonitionblock note data-line-362">
 <table>
 <tr>
 <td class="icon">
-<div class="title">Note</div>
+<i class="fa icon-note" title="Note"></i>
 </td>
 <td class="content">
 事实上, 以上提到的规范基于且符合
@@ -698,18 +700,18 @@ Fixes #&lt;issue number&gt;</pre>
 </table>
 </div>
 </div>
-<div class="sect3 data-line-366">
+<div class="sect3 data-line-367">
 <h4 id="_文件追踪规范">文件追踪规范</h4>
-<div class="ulist data-line-368">
+<div class="ulist data-line-369">
 <ul>
-<li class="data-line-368">
+<li class="data-line-369">
 <p>忽略操作系统自动生成的文件, 比如缩略图等.</p>
 </li>
-<li class="data-line-369">
-<p>忽略编译生成的中间文件、可执行文件等, 也就是如果一个文件是通过另一个文件自动生成的, 那
-自动生成的文件就没必要放进版本库, 比如 Java 编译产生的 <code>.class</code> 文件.</p>
+<li class="data-line-370">
+<p>忽略编译生成的中间文件、可执行文件等, 也就是如果一个文件是通过另一个文件自动生成的,
+那自动生成的文件就没必要放进版本库, 比如 Java 编译产生的 <code>.class</code> 文件.</p>
 </li>
-<li class="data-line-371">
+<li class="data-line-372">
 <p>忽略你自己的带有敏感信息的配置文件，比如存放口令的配置文件.</p>
 </li>
 </ul>
@@ -718,11 +720,17 @@ Fixes #&lt;issue number&gt;</pre>
 </div>
 </div>
 </div>
+<div class="sect1 data-line-374">
+<h2 id="_进阶操作">进阶操作</h2>
+<div class="sectionbody">
+
+</div>
+</div>
 </div>
 <div id="footer">
 <div id="footer-text">
 Version 1<br>
-Last updated 2021-07-05 06:59:52 +0800
+Last updated 2021-07-05 10:03:37 +0800
 </div>
 </div>
 </body>
