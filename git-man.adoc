@@ -1,11 +1,13 @@
 = Git 使用规范手册
 唐浩晋 <tanghaojin@outlook.com>; 陈璐; 高泽宇
-:icons: font
 1, {docdate}
 :toc: left
 :toc-title: 目录
 :toclevels: 4
 :stylesheet: css/clean.css
+:imagesdir: images
+:tip-caption: 💡
+:note-caption: 📝
 
 == 基本操作
 
@@ -85,9 +87,11 @@ git add <target>
 在创建一个git项目时, 默认会得到一个 master 分支. 如果 master 分支已经被发布, 但我们又需
 要开发新的功能, 那么此时并不方便在 master 分支上直接进行修改. 
 
-一个比较好的策略是新建一个 develop 分支, 在该分支上开发完毕之后再合并分支到 master 分支. 
-在 develop 分支上开发时, 再根据不同的需求, 新建相应的分支, 开发完毕后再合并到 develop 分支. 
-当 develop 分支完成开发后, 再将 develop 分支合并到 master 分支上线. 
+一个比较好的策略是: 
+
+* 创建一个 develop 分支作为开发主线. 开发时以 develop 分支为基础, 新建临时分支.
+在临时分支上开发完毕后, 再合并回 develop 分支.
+* 当 develop 分支经过充分的测试和验证后, 再将 develop 分支合并回 master 分支. 
 
 为了更好地说明开发流程, 我们来看一个简单的例子. 
 
@@ -98,7 +102,7 @@ git add <target>
 
 [#初始状态]
 .初始状态
-image::image/img1.svg[初始状态, 50%, align="center"]
+image::img1.svg[初始状态, 50%, align="center"]
 
 ==== 新增功能
 
@@ -116,7 +120,7 @@ Switched to a new branch "feat-cache"
 
 [#在feat-cache上有一些提交的仓库]
 .在 `feat-cache` 上有一些提交的仓库
-image::image/img2.svg[在 `feat-cache` 上有一些提交的仓库, 75%, align="center"]
+image::img2.svg[在 `feat-cache` 上有一些提交的仓库, 75%, align="center"]
 
 ==== 突发需求
 
@@ -160,7 +164,7 @@ $ git commit -m "fix: `fence` not implemented"
 
 [#hot-fix分支]
 .在 `hot-fix` 分支上修好了 bug 的仓库
-image::image/img3.svg[在 `hot-fix` 分支上修好了 bug 的仓库, 75%, align="center"]
+image::img3.svg[在 `hot-fix` 分支上修好了 bug 的仓库, 75%, align="center"]
 
 时间就是金钱. 你将 `hot-fix` 分支合并进 `develop` 分支, 并将本地分支提交到远程仓库:
 
@@ -219,7 +223,7 @@ Deleted branch hot-fix (was 1a80fb7).
 
 [#bug修复完成后的仓库]
 .bug 修复完成后的仓库
-image::image/img4.svg[bug 修复完成后的仓库, 75%, align="center"]
+image::img4.svg[bug 修复完成后的仓库, 75%, align="center"]
 
 ==== 合并修补
 
@@ -246,7 +250,7 @@ RVI.scala    | 3 +++
 
 [#合并提交后的仓库]
 .合并提交后的仓库
-image::image/img5.svg[合并提交后的仓库, 90%, align="center"]
+image::img5.svg[合并提交后的仓库, 90%, align="center"]
 
 你嘬了一口咖啡, 心想: 终于可以继续写 cache 了. 
 
@@ -273,7 +277,7 @@ $ git merge feat-cache
 
 [#实现cache后的仓库]
 .实现 cache 后的仓库
-image::image/img6.svg[实现cache后的仓库, 80%, align="center"]
+image::img6.svg[实现cache后的仓库, 80%, align="center"]
 
 === 开发规范
 
@@ -372,3 +376,166 @@ https://github.com/angular/angular/blob/master/CONTRIBUTING.md[Angular 规范]
 * 忽略你自己的带有敏感信息的配置文件，比如存放口令的配置文件.
 
 == 进阶操作
+
+读到这里, 你应该已经可以规范地使用 git 来进行开发了. 但是, 你可能会遇到一些让你棘手的问题:
+
+* 提交信息不小心写错了
+* 想要将另一个分支的某个文件“复制”到当前分支
+* 只想将工作区某文件的一部分修改暂存
+* 不小心暂存了不想暂存的文件, 想要取消暂存
+* 想要将某个文件还原到最近一次提交的状态
+* 撤回一次或多次提交
+* 只想合并部分 commit 到另一个分支
+* commit 太过零碎, 想要把多个 commit 合为一个, 或是跳过某些 commit
+
+要想简单方便地解决这些问题, 就需要用到一些进阶的操作了.
+
+=== 对已有的 commit 进行修改
+
+==== 修正最近的一次 commit
+
+如果你发现, 最新的 commit 存在一些错误, 想要对其进行一些修正, 那么只需要将修改好的文件暂存,
+然后运行 `git commit --amend` 即可.
+
+但是, 如果你想修改好几次提交之前的错误, 那就只能够先撤回 commit 了.
+
+==== 撤回最新的 commit
+
+要撤回最新的 commit, 可以使用 `git reset --hard HEAD^` 命令.
+
+==== 撤回连续的多个 commit
+
+如果要撤回多个 commit, 则可以使用 `git reset --hard HEAD~n` 命令, 其中 `n`
+代表撤回 commit 的个数.
+
+除此之外, 我们还可以使用 `git rebase -i HEAD~n` 命令来交互式地对之前的 `n` 次 commit
+进行修改, 合并, 跳过等操作.
+
+=== 合并分支中的部分提交
+
+`git merge` 会将所有的更改都合并到当前分支, 但有时我们只想合并部分 commit 到当前分支.
+这种情况下, 我们可以使用 `git cherry-pick` 命令.
+
+通过 `git cherry-pick <commitHash>` 可以将指定提交合并到当前分支,
+并在当前分支产生一个新的提交. 当然, 我们也可以一次性合并多个提交, 只需同时指定多个提交即可.
+
+如果想要合并某几个连续的提交到当前分支, 可以执行 `git cherry-pick <commit1>..<commit2>`
+命令. `commit 1` 必须早于 `commit 2`, 并且 `commit1` 将不被合并, `commit2` 将被合并.
+
+=== 将某分支某文件“复制”到当前分支
+
+`git checkout` 除了可以用于切换分支以外, 还可以用于将某分支的某文件“复制”到当前分支.
+只需使用 `git checkout [branch-src] -- <file>` 即可. 
+
+这条命令会将 `branch-src` 分支或提交的 `file` 文件复制到当前工作区之中. 如果省略了
+`branch-src` 参数, 则默认指定为当前分支的最近一次提交.
+
+=== 暂存某个文件的一部分改动
+
+通过 `git add -p <file>` 可以暂存文件的特定部分. 例如:
+
+[source, git]
+----
+$ git add -p playground/sim/src/cpu/csrcs/uart.cpp
+diff --git a/playground/sim/src/cpu/csrcs/uart.cpp b/playground/sim/src/cpu/csrcs/uart.cpp
+index 4d20a84..7f6caa1 100644
+--- a/playground/sim/src/cpu/csrcs/uart.cpp
++++ b/playground/sim/src/cpu/csrcs/uart.cpp
+@@ -5,7 +5,26 @@
+ #define FIFO_SIZE 1024
+ static char fifo[FIFO_SIZE] = {0};
+ static short head = 0, tail = 0;
+-bool uart_isRunning = false;
++static bool uart_isRunning = false, divisor_latch = false;
++static bool receive_interrupt = false;
++static char scratch = 0;
++
++enum {
++  Receive_Holding  = 0b000,
++  Interrupt_Status = 0b010,
++  Line_Status      = 0b101,
++  Modem_Status     = 0b110,
++  Scratchpad_Read  = 0b111
++}; // READ MODE
++
++enum {
++  Transmit_Holding = 0b000,
++  Interrupt_Enable = 0b001,
++  FIFO_control     = 0b010,
++  Line_Control     = 0b011,
++  Modem_Control    = 0b100,
++  Scratchpad_Write = 0b111
++}; // WRITE MODE
+
+ pthread_t thread_in;
+ pthread_mutex_t mutex_fifo_opt = PTHREAD_MUTEX_INITIALIZER;
+(1/3) Stage this hunk [y,n,q,a,d,j,J,g,/,e,?]?
+----
+
+输入 `?` 可以查看使用帮助:
+
+[source, git]
+----
+y - stage this hunk
+n - do not stage this hunk
+q - quit; do not stage this hunk or any of the remaining ones
+a - stage this hunk and all later hunks in the file
+d - do not stage this hunk or any of the later hunks in the file
+g - select a hunk to go to
+/ - search for a hunk matching the given regex
+j - leave this hunk undecided, see next undecided hunk
+J - leave this hunk undecided, see next hunk
+e - manually edit the current hunk
+? - print help
+----
+
+我们将第一部分暂存, 而跳过剩余的部分, 则最终的效果为:
+
+[source, git]
+----
+$ git status
+On branch pipeline
+Your branch is up to date with 'gitlab/pipeline'.
+
+Changes to be committed:
+  (use "git restore --staged <file>..." to unstage)
+        modified:   playground/sim/src/cpu/csrcs/uart.cpp
+
+Changes not staged for commit:
+  (use "git add <file>..." to update what will be committed)
+  (use "git restore <file>..." to discard changes in working directory)
+        modified:   playground/sim/src/cpu/AXI_UART.scala
+        modified:   playground/sim/src/cpu/csrcs/uart.cpp
+        modified:   playground/src/cpu/privileged/CSRs.scala
+----
+
+可以看到, 我们仅暂存了该文件的一部分.
+
+=== git rebase
+
+`git rebase <branch>` 是一个十分强大的命令, 其使用场景与 `git merge <branch>`
+十分类似. 该指令首先会寻找当前分支与 `branch` 分支的最近公共祖先, 之后将 `branch`
+分支从该祖先节点开始的所有提交全部移动到当前分支的顶端.
+
+==== git rebase 与 git merge 的区别
+
+为了更清晰地说明这二者的区别, 我们回到之前的<<bug修复完成后的仓库, 例子>>.
+方便起见, 我们将图重新搬到<<bug修复完成后的仓库2, 下面>>.
+
+[#bug修复完成后的仓库2]
+.bug 修复完成后的仓库
+image::img4.svg[bug 修复完成后的仓库, 75%, align="center"]
+
+执行 `git merge` 后的结果如<<merge的结果, 下图>>所示:
+
+[#merge的结果]
+.git merge的结果
+image::img7.svg[git merge的结果, 90%, align="center"]
+
+执行 `git rebase` 后的结果如<<rebase的结果, 下图>>所示:
+
+[#rebase的结果]
+.git rebase的结果
+image::img8.svg[git rebase的结果, 90%, align="center"]
+
+当然, `git rebase` 还有更多的高级用法, 有兴趣的读者可以进一步了解. 
