@@ -1,0 +1,12 @@
+site:
+  title: Git 使用规范手册
+  start_page: git-man::git-man.adoc 
+content:
+  sources: 
+  - url: https://github.com/Tang-Haojin/git-man.git
+    branches: feat-antora
+    start_path: docs
+ui: 
+  bundle:
+    url: https://github.com/asciidoctor/docs.asciidoctor.org-ui/releases/download/prod-248/ui-bundle.zip
+    snapshot: true

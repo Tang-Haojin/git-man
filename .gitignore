@@ -1,0 +1,14 @@
+*.*
+*
+!css/
+!css/*
+!css/**
+!docs/
+!docs/*
+!docs/**
+!images/
+!images/*
+!images/**
+!.gitignore
+!Makefile
+!antora.yml

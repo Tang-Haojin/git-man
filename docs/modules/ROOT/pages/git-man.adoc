@@ -1,11 +1,10 @@
 = Git 使用规范手册
 唐浩晋 <tanghaojin@outlook.com>; 陈璐; 高泽宇
-:icons: font
 1, {docdate}
-:toc: left
-:toc-title: 目录
-:toclevels: 4
-:stylesheet: css/clean.css
+//:toc: left
+//:toc-title: 目录
+//:toclevels: 4
+stylesheet: css/clean.css
 
 == 基本操作
 
@@ -85,9 +84,11 @@ git add <target>
 在创建一个git项目时, 默认会得到一个 master 分支. 如果 master 分支已经被发布, 但我们又需
 要开发新的功能, 那么此时并不方便在 master 分支上直接进行修改. 
 
-一个比较好的策略是新建一个 develop 分支, 在该分支上开发完毕之后再合并分支到 master 分支. 
-在 develop 分支上开发时, 再根据不同的需求, 新建相应的分支, 开发完毕后再合并到 develop 分支. 
-当 develop 分支完成开发后, 再将 develop 分支合并到 master 分支上线. 
+一个比较好的策略是: 
+
+* 创建一个 develop 分支作为开发主线. 开发时以 develop 分支为基础, 新建临时分支.
+在临时分支上开发完毕后, 再合并回 develop 分支.
+* 当 develop 分支经过充分的测试和验证后, 再将 develop 分支合并回 master 分支. 
 
 为了更好地说明开发流程, 我们来看一个简单的例子. 
 
@@ -98,7 +99,7 @@ git add <target>
 
 [#初始状态]
 .初始状态
-image::image/img1.svg[初始状态, 50%, align="center"]
+image::img1.svg[初始状态, 50%, align="center"]
 
 ==== 新增功能
 
@@ -116,7 +117,7 @@ Switched to a new branch "feat-cache"
 
 [#在feat-cache上有一些提交的仓库]
 .在 `feat-cache` 上有一些提交的仓库
-image::image/img2.svg[在 `feat-cache` 上有一些提交的仓库, 75%, align="center"]
+image::img2.svg[在 `feat-cache` 上有一些提交的仓库, 75%, align="center"]
 
 ==== 突发需求
 
@@ -160,7 +161,7 @@ $ git commit -m "fix: `fence` not implemented"
 
 [#hot-fix分支]
 .在 `hot-fix` 分支上修好了 bug 的仓库
-image::image/img3.svg[在 `hot-fix` 分支上修好了 bug 的仓库, 75%, align="center"]
+image::img3.svg[在 `hot-fix` 分支上修好了 bug 的仓库, 75%, align="center"]
 
 时间就是金钱. 你将 `hot-fix` 分支合并进 `develop` 分支, 并将本地分支提交到远程仓库:
 
@@ -219,7 +220,7 @@ Deleted branch hot-fix (was 1a80fb7).
 
 [#bug修复完成后的仓库]
 .bug 修复完成后的仓库
-image::image/img4.svg[bug 修复完成后的仓库, 75%, align="center"]
+image::img4.svg[bug 修复完成后的仓库, 75%, align="center"]
 
 ==== 合并修补
 
@@ -246,7 +247,7 @@ RVI.scala    | 3 +++
 
 [#合并提交后的仓库]
 .合并提交后的仓库
-image::image/img5.svg[合并提交后的仓库, 90%, align="center"]
+image::img5.svg[合并提交后的仓库, 90%, align="center"]
 
 你嘬了一口咖啡, 心想: 终于可以继续写 cache 了. 
 
@@ -273,7 +274,7 @@ $ git merge feat-cache
 
 [#实现cache后的仓库]
 .实现 cache 后的仓库
-image::image/img6.svg[实现cache后的仓库, 80%, align="center"]
+image::img6.svg[实现cache后的仓库, 80%, align="center"]
 
 === 开发规范
 
