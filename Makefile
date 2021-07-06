@@ -1,6 +1,6 @@
 build: index.html
 
-index.html: git-man.adoc
+index.html: git-man.adoc images/* css/*
 	asciidoctor git-man.adoc -o index.html
 
 clean:
