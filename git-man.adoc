@@ -514,8 +514,8 @@ Changes not staged for commit:
 === git rebase
 
 `git rebase <branch>` 是一个十分强大的命令, 其使用场景与 `git merge <branch>`
-十分类似. 该指令首先会寻找当前分支与 `branch` 分支的最近公共祖先, 之后将 `branch`
-分支从该祖先节点开始的所有提交全部移动到当前分支的顶端.
+十分类似. 该指令首先会寻找当前分支与 `branch` 分支的最近公共祖先, 之后将当前分支
+从该祖先节点开始的所有提交全部移动到 `branch` 分支的顶端.
 
 ==== git rebase 与 git merge 的区别
 
