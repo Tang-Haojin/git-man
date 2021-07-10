@@ -1,3 +1,5 @@
 *.html
 .metals
 .vscode
+_book
+node_modules

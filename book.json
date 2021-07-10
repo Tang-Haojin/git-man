@@ -1,0 +1,20 @@
+{
+  "author": "唐浩晋 <tanghaojin@outlook.com>; 陈璐; 高泽宇",
+  "language": "zh-hans",
+  "plugins": [
+    "intopic-toc",
+    "-lunr",
+    "-search",
+    "search-pro",
+    "theme-comscore",
+    "tbfed-pagefooter",
+    "flexible-alerts"
+  ],
+  "pluginsConfig": {
+    "tbfed-pagefooter": {
+      "copyright": "Copyright &copy 唐浩晋·高泽宇·陈璐 2021",
+      "modify_label": "该文件修订时间：",
+      "modify_format": "YYYY-MM-DD HH:mm:ss"
+    }
+  }
+}
