@@ -2,7 +2,7 @@ plugins = $(addprefix node_modules/gitbook-plugin-,$(shell jq -r .plugins[] book
 
 build: _book/index.html
 
-_book/index.html: *.md images/* $(plugins)
+_book/index.html: 入门/*.md 基本操作/* *.md images/* $(plugins) book.json
 	gitbook build
 
 $(plugins):

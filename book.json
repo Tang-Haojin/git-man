@@ -12,7 +12,7 @@
   ],
   "pluginsConfig": {
     "tbfed-pagefooter": {
-      "copyright": "Copyright &copy 唐浩晋·高泽宇·陈璐 2021",
+      "copyright": "<a href=\"mailto:tanghaojin18@mails.ucas.ac.cn\">唐浩晋</a>·高泽宇·陈璐 2021",
       "modify_label": "该文件修订时间：",
       "modify_format": "YYYY-MM-DD HH:mm:ss"
     }
